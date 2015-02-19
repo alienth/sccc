@@ -13,12 +13,15 @@ var RenderedMarkdown = React.createClass({
   }
 })
 
+var cards = []
+
 var CardEditor = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function() {
     var state = {
       title: 'Card Name',
+      style: 'condition',
       kind: 'Condition Card',
       flavor: 'This is a card.',
       text: '* You\'re looking at a card.\n* The card is made of paper.',
@@ -42,17 +45,24 @@ var CardEditor = React.createClass({
     if (!data) {
       return
     }
+    cards = data
+    this.setState(cards[cards.length - 1])
+  },
 
-    this.setState(data)
+  nextCard: function() {
+    cards.push(this.state)
+    this.updateJSON()
+    this.forceUpdate()
   },
 
   updateJSON: function() {
-    this.refs.code.getDOMNode().value = JSON.stringify(this.state)
+    this.refs.code.getDOMNode().value = JSON.stringify(cards)
   },
 
   render: function() {
+    var classString = "card preview " + this.state.style
     var card = (
-      <div className="card preview">
+      <div className={classString}>
         <div className="top">
           <h1>{this.state.title}</h1>
           <h2>{this.state.kind}</h2>
@@ -64,6 +74,22 @@ var CardEditor = React.createClass({
         </div>
       </div>
     )
+
+    var allCards = []
+    for (var s of cards)
+    {
+        allCards.push(<div className={classString}>
+        <div className="top">
+          <h1>{s.title}</h1>
+          <h2>{s.kind}</h2>
+        </div>
+        <div className="main">
+          <p className="flavor">{s.flavor}</p>
+          <RenderedMarkdown className="text" md={s.text} />
+          <RenderedMarkdown className="details" md={s.details} />
+        </div>
+      </div>)
+    }
 
     return (
       <div>
@@ -77,6 +103,7 @@ var CardEditor = React.createClass({
 
             <div className="form">
               <input type="text" placeholder="title" valueLink={this.linkState('title')} />
+              <input type="text" placeholder="style" valueLink={this.linkState('style')} />
               <input type="text" placeholder="kind" valueLink={this.linkState('kind')} />
               <input type="text" placeholder="flavor text" valueLink={this.linkState('flavor')} />
               <textarea placeholder="card text markdown." valueLink={this.linkState('text')} />
@@ -84,13 +111,14 @@ var CardEditor = React.createClass({
             </div>
           </div>
 
+          <button id="next-button" onClick={this.nextCard}>Next card</button>
           <button id="print-button" onClick={window.print}>Print a sheet of this card</button>
 
-          <textarea ref="code" id="code" defaultValue={JSON.stringify(this.state)} onChange={this.parseJSON} onBlur={this.updateJSON} />
+          <textarea ref="code" id="code" defaultValue={JSON.stringify(cards)} onChange={this.parseJSON} onBlur={this.updateJSON} />
         </div>
 
         <div className="page">
-          {_.times(12, _.constant(card))}
+          {allCards}
         </div>
       </div>
     )
