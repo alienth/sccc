@@ -1,0 +1,132 @@
+body {
+  font-family: sans-serif;
+  width: 375px * 2;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.editor {
+  margin: 40px 0;
+
+  & > h1 {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 40px;
+  }
+}
+
+.form, .card {
+  width: 375px;
+  height: 523px;
+}
+
+.form {
+  input, textarea {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  textarea {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+.preview {
+  float: right;
+}
+
+.card {
+  @vpadding: 10px;
+  @hpadding: 15px;
+  float: right;
+  padding: @vpadding @hpadding;
+  box-sizing: border-box;
+  background: #EEDEC4;
+  box-shadow: 0 0 5px black;
+
+  .top {
+    background: #C56733;
+    padding: @vpadding @hpadding;
+    margin: -@vpadding -@hpadding;
+    margin-bottom: 0;
+    text-align: center;
+
+    h1, h2 {
+      margin: 0;
+      color: white;
+    }
+
+    h1 {
+      font-size: 1.5em;
+    }
+
+    h2 {
+      font-weight: normal;
+      font-size: 1.15em;
+    }
+  }
+
+  .flavor {
+    font-style: italic;
+    text-align: center;
+  }
+
+  .text, .details {
+    h1 {
+      font-size: 1.15em;
+      margin-bottom: .25em;
+    }
+
+    ul {
+      line-height: 1.5em;
+      padding: 0;
+      padding-left: 1em;
+      margin: 0;
+    }
+  }
+
+  .text {
+    background: #E2CCA7;
+    padding: @vpadding @hpadding;
+    margin: 0 -@hpadding;
+    overflow: hidden;  // to give inner element padding background color.
+  }
+}
+
+#print-button {
+  display: block;
+  font-size: 30px;
+  padding: 10px 20px;
+  margin: 40px auto;
+  clear: both;
+}
+
+#code {
+  width: 100%;
+  height: 300px;
+}
+
+.page {
+  display: none;
+}
+
+@media print {
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .editor, #edit-with-js-bin {
+    display: none !important;
+  }
+
+  .page {
+    display: block;
+  }
+
+  .card {
+    zoom: .45;
+    margin: 20px;
+  }
+}
