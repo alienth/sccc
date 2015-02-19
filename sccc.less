@@ -36,17 +36,57 @@ body {
   float: right;
 }
 
+.card.condition {
+  background: #EEDEC4;
+
+  .top {
+    background: #C56733;
+  }
+
+  .text {
+    background: #E2CCA7;
+  }
+}
+
+.card.encounter {
+  background: #99D799;
+
+  .top {
+    background: #3C9B3C;
+  }
+
+  .text {
+    background: #67BC67;
+  }
+}
+
+.card.daily {
+
+}
+
+.card.atwill {
+  background: #F9B5BC;
+
+  .top {
+    background: #C8525D;
+  }
+
+  .text {
+    background: #EE8690
+  }
+}
+
 .card {
   @vpadding: 10px;
   @hpadding: 15px;
   float: right;
   padding: @vpadding @hpadding;
   box-sizing: border-box;
-  background: #EEDEC4;
+  background: #CCCECE;
   box-shadow: 0 0 5px black;
 
   .top {
-    background: #C56733;
+    background: #7A8287;
     padding: @vpadding @hpadding;
     margin: -@vpadding -@hpadding;
     margin-bottom: 0;
@@ -87,7 +127,7 @@ body {
   }
 
   .text {
-    background: #E2CCA7;
+    background: #999DA0;
     padding: @vpadding @hpadding;
     margin: 0 -@hpadding;
     overflow: hidden;  // to give inner element padding background color.
